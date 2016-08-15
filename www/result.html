@@ -102,11 +102,14 @@
             <ul class="collection">
                 <li class="collection-item" ng-repeat="item in resultData">
                     <ul class="collection with-header">
+                        <li ng-repeat="obj in item" ng-if="obj.k == 'StartTime'" class="collection-item">
+                            <span class="chip green white-text">{{obj.k}} :</span> <span ng-bind-html="obj.v | trustHtml"></span>
+                        </li>
                         <li ng-repeat="obj in item" ng-if="obj.k == 'FullRequest' || obj.k == 'FullResponse'" class="collection-item">
                             <span class="chip blue white-text">{{obj.k}} :</span> <span ng-bind-html="obj.v | trustHtml"></span>
                         </li>
                         <li class="collection-item">
-                    <span ng-repeat="obj in item" ng-if="obj.k != 'FullRequest' && obj.k != 'FullResponse'">
+                    <span ng-repeat="obj in item" ng-if="obj.k != 'FullRequest' && obj.k != 'FullResponse' && obj.k != 'StartTime'">
                         <span class="chip white-text">{{obj.k}} :</span> <span ng-bind-html="obj.v | trustHtml"></span>
                     </span>
                         </li>
