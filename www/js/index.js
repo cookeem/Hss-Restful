@@ -10,6 +10,11 @@ app.config(function($routeProvider, $locationProvider) {
             controller: 'contentCtl',
             animation: 'animation-slideleft'
         })
+        .when('/result/:querystring', {
+            templateUrl: 'result.html',
+            controller: 'contentCtl',
+            animation: 'animation-slideleft'
+        })
         .when('/error', {
             templateUrl: 'error.html',
             controller: 'contentCtl',

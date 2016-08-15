@@ -67,8 +67,12 @@ object EsUtils {
         termFields.foreach { case (field, term) =>
           if (term.trim != "") {
             request.addHighlightedField(field, 0, 0)
-            term.split("\\W+").foreach { str =>
-              query.must(QueryBuilders.termQuery(field, str.toLowerCase))
+            if (field == "FullRequest" || field == "FullResponse" || field == "Target" || field == "RootLogId") {
+              term.split("\\W+").foreach { str =>
+                query.must(QueryBuilders.termQuery(field, str.toLowerCase))
+              }
+            } else {
+              query.must(QueryBuilders.termQuery(field, term))
             }
           }
         }

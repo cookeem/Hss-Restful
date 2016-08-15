@@ -1,11 +1,33 @@
 /**
  * Created by cookeem on 16/6/3.
  */
-app.controller('resultAppCtl', function($scope, $rootScope, $timeout, $http) {
+app.controller('resultAppCtl', function($scope, $rootScope, $routeParams, $timeout, $http) {
+    //初始化url参数
+    $scope.searchtype = "pro";
+    $scope.searchTypeDesc = "专业查询";
+    if ($routeParams.querystring) {
+        $scope.querystring = $routeParams.querystring;
+        var querys = $scope.querystring.split("&");
+        for(var i = 0; i < querys.length; i++) {
+            var paramkv = querys[i].split("=");
+            if (paramkv.length == 2) {
+                var paramk = paramkv[0].trim();
+                var paramv = paramkv[1].trim();
+                if (paramk == "searchtype" && (paramv == "pro" || paramv == "4g")) {
+                    $scope.searchtype = paramv;
+                }
+            }
+        }
+        if ($scope.searchtype == "4g") {
+            $scope.searchTypeDesc = "4G停开机查询";
+        }
+    }
+    console.log($scope.searchtype);
+
     //初始化materialize select
     $timeout(function() {
         $('select').material_select();
-    }, 0);
+    }, 100);
 
     $scope.took = 0;
     $scope.resultData = [];
@@ -63,23 +85,45 @@ app.controller('resultAppCtl', function($scope, $rootScope, $timeout, $http) {
         toStartTime: ""
     };
 
+    $scope.search4G = {
+        Isdn: "",
+        Epslock: "",
+        Status4G: ""
+    }
+
     $scope.submitSearch = function() {
-        var termArray = $.map($scope.searchTerm, function(v, k) {
-            return [{ field: k, term: v}];
-        });
-        var termFields = JSON.stringify(termArray);
-        if ($scope.formData.count != "") {
-            $scope.count = $scope.formData.count;
+        if ($scope.searchtype == "4g") {
+            $scope.searchData = {
+                searchType: "4g",
+                fields: $scope.formData.showFields.join(),
+                page: $scope.page,
+                count: $scope.formData.count,
+                descSort: $scope.formData.descSort,
+                fromStartTime: $scope.formData.fromStartTime,
+                toStartTime: $scope.formData.toStartTime,
+                isdn: $scope.search4G.Isdn,
+                epslock: $scope.search4G.Epslock,
+                status4G: $scope.search4G.Status4G
+            };
+        } else {
+            var termArray = $.map($scope.searchTerm, function(v, k) {
+                return [{ field: k, term: v}];
+            });
+            var termFields = JSON.stringify(termArray);
+            if ($scope.formData.count != "") {
+                $scope.count = $scope.formData.count;
+            }
+            $scope.searchData = {
+                searchType: "pro",
+                fields: $scope.formData.showFields.join(),
+                page: $scope.page,
+                count: $scope.formData.count,
+                descSort: $scope.formData.descSort,
+                fromStartTime: $scope.formData.fromStartTime,
+                toStartTime: $scope.formData.toStartTime,
+                termFields: termFields
+            };
         }
-        $scope.searchData = {
-            "fields": $scope.formData.showFields.join(),
-            "page": $scope.page,
-            "count": $scope.formData.count,
-            "descSort": $scope.formData.descSort,
-            "fromStartTime": $scope.formData.fromStartTime,
-            "toStartTime": $scope.formData.toStartTime,
-            "termFields": termFields
-        };
         $rootScope.isLoading = true;
         $http({
             method  : 'POST',
@@ -96,11 +140,10 @@ app.controller('resultAppCtl', function($scope, $rootScope, $timeout, $http) {
             }
             if (response.data.data) {
                 $scope.resultData = response.data.data.map(function(obj) {
-                    var objArray = $.map(obj, function(v, k) {
+                    return $.map(obj, function(v, k) {
                         var str = html_encode(v).replace(/##begin##/g, '<span class="chip red white-text">').replace(/##end##/g,'</span>');
                         return [{ k: k, v: str}];
                     });
-                    return objArray;
                 });
             }
             if (response.data.rscount) {
@@ -142,9 +185,6 @@ app.controller('resultAppCtl', function($scope, $rootScope, $timeout, $http) {
                 range.push(i);
             }
             $scope.range = range;
-            $timeout(function() {
-                $('select').material_select();
-            }, 0);
             $rootScope.isLoading = false;
         }, function errorCallback(response) {
             console.info("error:" + response.data);

@@ -1,67 +1,89 @@
 <div ng-controller="resultAppCtl">
-    <div ng-if="!isLoading" class="row">
+    <div ng-show="!isLoading" class="row">
         <div class="card-panel grey lighten-5 z-depth-1 hoverable">
-            <h5>搜索条件(输入相关查询的关键字)</h5>
+            <h5>{{searchTypeDesc}}</h5>
             <div class="row">
-                <div class="input-field col s2">
-                    <input id="FullRequest" ng-model="searchTerm.FullRequest" type="text">
-                    <label for="FullRequest">FullRequest</label>
+                <div  ng-if="searchtype == 'pro'" class="row">
+                    <div class="input-field col s4">
+                        <input id="FullRequest" ng-model="searchTerm.FullRequest" type="text">
+                        <label for="FullRequest">FullRequest</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="FullResponse" ng-model="searchTerm.FullResponse" type="text">
+                        <label for="FullResponse">FullResponse</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Target" ng-model="searchTerm.Target" type="text">
+                        <label for="Target">Target</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Status" ng-model="searchTerm.Status" type="text">
+                        <label for="Status">Status</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Operation" ng-model="searchTerm.Operation" type="text">
+                        <label for="Operation">Operation</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Protocol" ng-model="searchTerm.Protocol" type="text">
+                        <label for="Protocol">Protocol</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="LogType" ng-model="searchTerm.LogType" type="text">
+                        <label for="LogType">LogType</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="ResponseCode" ng-model="searchTerm.ResponseCode" type="text">
+                        <label for="ResponseCode">ResponseCode</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="ExecuteTime" ng-model="searchTerm.ExecuteTime" type="text">
+                        <label for="ExecuteTime">ExecuteTime</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="TransactionId" ng-model="searchTerm.TransactionId" type="text">
+                        <label for="TransactionId">TransactionId</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="SubLogId" ng-model="searchTerm.SubLogId" type="text">
+                        <label for="SubLogId">SubLogId</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Hostname" ng-model="searchTerm.Hostname" type="text">
+                        <label for="Hostname">Hostname</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="User" ng-model="searchTerm.User" type="text">
+                        <label for="User">User</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="RootLogId" ng-model="searchTerm.RootLogId" type="text">
+                        <label for="RootLogId">RootLogId</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="Instance" ng-model="searchTerm.Instance" type="text">
+                        <label for="Instance">Instance</label>
+                    </div>
                 </div>
-                <div class="input-field col s2">
-                    <input id="FullResponse" ng-model="searchTerm.FullResponse" type="text">
-                    <label for="FullResponse">FullResponse</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Target" ng-model="searchTerm.Target" type="text">
-                    <label for="Target">Target</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Status" ng-model="searchTerm.Status" type="text">
-                    <label for="Status">Status</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Operation" ng-model="searchTerm.Operation" type="text">
-                    <label for="Operation">Operation</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Protocol" ng-model="searchTerm.Protocol" type="text">
-                    <label for="Protocol">Protocol</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="LogType" ng-model="searchTerm.LogType" type="text">
-                    <label for="LogType">LogType</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="ResponseCode" ng-model="searchTerm.ResponseCode" type="text">
-                    <label for="ResponseCode">ResponseCode</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="ExecuteTime" ng-model="searchTerm.ExecuteTime" type="text">
-                    <label for="ExecuteTime">ExecuteTime</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="TransactionId" ng-model="searchTerm.TransactionId" type="text">
-                    <label for="TransactionId">TransactionId</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="SubLogId" ng-model="searchTerm.SubLogId" type="text">
-                    <label for="SubLogId">SubLogId</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Hostname" ng-model="searchTerm.Hostname" type="text">
-                    <label for="Hostname">Hostname</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="User" ng-model="searchTerm.User" type="text">
-                    <label for="User">User</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="RootLogId" ng-model="searchTerm.RootLogId" type="text">
-                    <label for="RootLogId">RootLogId</label>
-                </div>
-                <div class="input-field col s2">
-                    <input id="Instance" ng-model="searchTerm.Instance" type="text">
-                    <label for="Instance">Instance</label>
+                <div ng-if="searchtype == '4g'" class="row">
+                    <div class="input-field col s2">
+                        <input id="Isdn" ng-model="search4G.Isdn" type="text">
+                        <label for="Isdn">手机号</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <select id="Epslock" ng-model="search4G.Epslock">
+                            <option value="" selected>4G停开机</option>
+                            <option value="0">4G停机</option>
+                            <option value="1">4G开机</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s2">
+                        <select id="Status4G" ng-model="search4G.Status4G">
+                            <option value="" selected>4G停开机状态</option>
+                            <option value="0">失败</option>
+                            <option value="1">成功</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="input-field col s2">
                     <input id="fromStartTime" ng-model="formData.fromStartTime" type="text">
@@ -72,13 +94,13 @@
                     <label for="toStartTime">结束时间段</label>
                 </div>
                 <div class="row"></div>
-                <div class="input-field col s3">
+                <div class="input-field col s6">
                     <select id="showFields" multiple ng-model="formData.showFields">
                         <option value="" disabled selected>请选择需要显示的字段</option>
                         <option ng-repeat="item in allFields" value="{{item}}" selected>{{item}}</option>
                     </select>
                 </div>
-                <div class="input-field col s3">
+                <div class="input-field col s2">
                     <select id="count" ng-model="formData.count">
                         <option value="" disabled selected>每页显示</option>
                         <option value="10">10</option>
@@ -86,14 +108,14 @@
                         <option value="50">50</option>
                     </select>
                 </div>
-                <div class="input-field col s3">
+                <div class="input-field col s2">
                     <select id="descSort" ng-model="formData.descSort">
                         <option value="" disabled selected>排序方式</option>
                         <option value="1">最新排序</option>
                         <option value="0">最早排序</option>
                     </select>
                 </div>
-                <div class="input-field col s3 center-align">
+                <div class="input-field col s2 center-align">
                     <a ng-click="pressSearch()" class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>查 找</a>
                 </div>
             </div>

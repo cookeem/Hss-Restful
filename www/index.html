@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>HSS日志查询后台</title>
+    <title>HSS日志查询</title>
 
     <!--<link rel="shortcut icon"  href="images/favicon.ico">-->
     <!--font css-->
@@ -24,8 +24,14 @@
     <nav id="top-navbar">
         <div class="nav-wrapper blue-grey">
             <a class="brand-logo center"><i class="material-icons left">search</i> HSS日志查询后台</a>
-            <div class="center-align">
-            </div>
+            <ul class="right">
+                <li><a class="dropdown-button" href="#!" data-activates="drop-down-menu">查询类型<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+            <ul id="drop-down-menu" class="dropdown-content">
+                <li><a href="index.html#!/result/searchtype=pro" class="black-text">专业查询</a></li>
+                <li class="divider"></li>
+                <li><a href="index.html#!/result/searchtype=4g" class="black-text">4G停开机查询</a></li>
+            </ul>
         </div>
     </nav>
 </header>
